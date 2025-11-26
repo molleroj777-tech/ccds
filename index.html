@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abstract Mountain Login</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins, sans-serif;
+    overflow: hidden;
+    background: radial-gradient(circle at bottom, #0f0f1f, #000000);
+    color: #fff;
+}
+
+/* ❇ abstract mountain shapes using CSS */
+.mountain {
+    position: absolute;
+    bottom: 0;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #00eaff, #0077ff);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    opacity: 0.3;
+    filter: blur(8px);
+    animation: moveMountain 8s infinite alternate ease-in-out;
+}
+
+.mountain:nth-child(2) { 
+    width: 250px; height: 250px; left: 20%; animation-duration: 10s; opacity:0.25;
+}
+.mountain:nth-child(3) { 
+    width: 180px; height: 180px; left: 60%; animation-duration: 12s; opacity:0.2;
+}
+
+@keyframes moveMountain {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(-15px) scale(1.05); }
+}
+
+/* ❇ floating particles */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0,255,255,0.4);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: float 8s infinite linear;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0.1; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0.8; }
+}
+
+/* ❇ FORM BOX */
+.box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    width: 350px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px #00eaff70, inset 0 0 30px #00eaff30;
+    animation: glow 5s infinite alternate;
+    transform-style: preserve-3d;
+    transition: transform 0.2s;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 20px #00eaff40, inset 0 0 20px #00eaff10; }
+    100% { box-shadow: 0 0 50px #00eaff, inset 0 0 30px #00eaff40; }
+}
+
+h2 {
+    text-align: center;
+    font-size: 26px;
+    color: #00eaff;
+    text-shadow: 0 0 5px #00eaff, 0 0 10px #00eaff, 0 0 20px #00ffff;
+    animation: neonGlow 1.5s infinite alternate;
+}
+
+@keyframes neonGlow {
+    from { text-shadow: 0 0 5px #00eaff, 0 0 10px #00eaff; }
+    to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00eaff; }
+}
+
+/* ❇ INPUT STYLE */
+.inputBox {
+    margin: 20px 0;
+    position: relative;
+}
+
+.inputBox input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.07);
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 0 0 10px #00eaff60;
+    transition: 0.4s;
+}
+
+.inputBox input:focus {
+    box-shadow: 0 0 25px #00eaff, 0 0 10px #00ffff;
+    transform: scale(1.03);
+}
+
+.inputBox label {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    color: #aaa;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.inputBox input:focus ~ label,
+.inputBox input:not(:placeholder-shown) ~ label {
+    top: -10px;
+    font-size: 12px;
+    color: #00eaff;
+}
+
+/* ❇ BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #00eaff, #0077ff);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.4s;
+    box-shadow: 0 0 20px #00eaff;
+}
+
+button:hover {
+    transform: scale(1.1) rotateX(10deg);
+    box-shadow: 0 0 30px #00eaff, 0 0 40px #0088ff;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+// ❇ create abstract mountains
+for(let i=0; i<3; i++){
+    let m = document.createElement('div');
+    m.classList.add('mountain');
+    m.style.left = (i*30 + 10) + '%';
+    document.body.appendChild(m);
+}
+
+// ❇ create floating particles
+for(let i=0;i<50;i++){
+    let p = document.createElement("div");
+    p.classList.add("particle");
+    p.style.left = Math.random()*100 + "vw";
+    p.style.animationDuration = 5 + Math.random()*10 + "s";
+    p.style.opacity = Math.random();
+    document.body.appendChild(p);
+}
+
+// ❇ Box rotate with mouse
+document.body.addEventListener('mousemove', e => {
+    const box = document.querySelector('.box');
+    let x = (window.innerWidth / 2 - e.pageX) / 30;
+    let y = (window.innerHeight / 2 - e.pageY) / 30;
+    box.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
+</script>
+
+<div class="box">
+    <h2>Abstract Login</h2>
+
+    <div class="inputBox">
+        <input type="text" required placeholder=" " />
+        <label>Username</label>
+    </div>
+
+    <div class="inputBox">
+        <input type="password" required placeholder=" " />
+        <label>Password</label>
+    </div>
+    
+    <button onclick="login()">Submit</button>
+</div>
+
+<script>
+function login() {
+    alert("Successfully submitted!");
+}
+</script>
+
+</body>
+</html>
